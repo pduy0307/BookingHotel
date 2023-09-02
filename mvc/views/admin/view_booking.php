@@ -29,7 +29,6 @@
                                                 <th class="center"> CheckOut</th>
                                                 <th class="center"> Phòng </th>
                                                 <th class="center"> Giá tiền </th>
-                                                <th class="center"> Số Lượng Phòng </th>
                                                 <th class="center"> Người Lớn </th>
                                                 <th class="center"> Trẻ em </th>
                                                 <th class="center"> Tên</th> 
@@ -54,7 +53,6 @@
                                                     <td class="center">'.$row_r["thoi_gian_ra"].'</td>
                                                     <td class="center">'.$row_r["ma_phong"].'</td>
                                                     <td class="center">'.$row_r["gia_tien"].'</td>
-                                                    <td class="center">'.$row_r["so_luong_phong"].'</td>
                                                     <td class="center">'.$row_r["nguoi_lon"].'</td>
                                                     <td class="center">'.$row_r["tre_em"].'</td>
                                                     <td class="center">'.$row_r["ho_ten"].'</td>
@@ -72,7 +70,7 @@
                                                         <a href="./admin/editbooking/'.$row_r["ma_dat_phong"].'" class="btn btn-tbl-edit btn-xs">
                                                             <i class="fa fa-pencil"></i>
                                                         </a>
-                                                        <a href="./admin/deletebooking/'.$row_r["ma_dat_phong"].'" class="btn btn-tbl-edit btn-xs" style="background-color:#f96332">
+                                                        <a href="./admin/deletebooking/'.$row_r["ma_phong"].'" class="btn btn-tbl-edit btn-xs" style="background-color:#f96332">
                                                             <i class="fa fa-trash-o"></i>
                                                         </a>
                                                     </td>

@@ -13,7 +13,9 @@ class room extends controler{
     public function home(){
         $this->view("home_index",["page"=>"list_room_view" ,
         "all_rooms"=>$this->doituong->getAllRoom(),
-        "listroom"=> $this->doituong->getListRoom()]);
+        "listroom"=> $this->doituong->getListRoom(),
+        "listroom_emp"=> $this->doituong->getListRoom_emp()
+        ]);
     }
 
     // chi tiết phòng 
@@ -32,7 +34,10 @@ class room extends controler{
         "one_rooms"=>$result_room,
         "image_room"=>$this->doituong->getImageRoom($image),
         "thuocTinh_room"=>$this->doituong->getThuocTinhRoom($thuoctinh),
-        "listroom"=> $this->doituong->getListRoom()]);
+        "listroom"=> $this->doituong->getListRoom(),
+        "listroom_emp"=> $this->doituong->getListRoom_emp()
+        ]);
+        
     }
 
 

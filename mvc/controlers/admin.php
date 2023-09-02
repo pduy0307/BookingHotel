@@ -171,7 +171,6 @@ class admin extends controler{
                     $ma_dp = $_POST["ma_dp"];
                     $ngay_check_in = $_POST["ngay_check_in"];
                     $email = $_POST["email"];
-                    $so_lp = $_POST["slp"];
                     $ngay_check_out = $_POST["ngay_check_out"];
                     $sdt = $_POST["sdt"];
                     $nguoi_lon = $_POST["nguoi_lon"];
@@ -181,8 +180,8 @@ class admin extends controler{
                     $loai_phong = $_POST["loai_phong"];
                     $ghichu = $_POST["ghichu"];
 
-                    $result= $this->doituong-> updateBooking($ma_dp,$ngay_check_in, $so_lp,
-                    $ngay_check_out ,$sdt, $nguoi_lon,$hoten, $treem , $ngay_dat,$loai_phong  , $ghichu, $email );
+                    $result= $this->doituong-> updateBooking($ma_dp,$ngay_check_in, $ngay_check_out 
+                    ,$sdt, $nguoi_lon,$hoten, $treem , $ngay_dat,$loai_phong  , $ghichu, $email );
                     $this->view("admin_index",["page"=>"view_booking",
                     "result_up"=> $result,
                     "booking_room"=>$this->doituong->getBookRoom(),
@@ -190,12 +189,14 @@ class admin extends controler{
                     "number_booking"=>$this->doituong->getNumberBookingRoom(),
                     "number_lienhe"=>$this->doituong->getNumber_lienhe(),
                     "chitietnumberbooking"=>$this->doituong->getChitietNumberBooking(),
+                    "updateFull"=>$this->listroom->updateSTT($loai_phong),
                     "user_info"=>$_SESSION["ten"]]);
 
             }else{
                 $this->view("admin_index",["page"=>"update_booking",
                 "one_booking_room"=>$this->doituong->getOneBookRoom($ma),
                 "listroom"=>$this->listroom->getListRoom(),
+                "listroom_emp"=>$this->listroom->getListRoom_emp(),
                 "number_booking"=>$this->doituong->getNumberBookingRoom(),
                 "number_lienhe"=>$this->doituong->getNumber_lienhe(),
                 "chitietnumberbooking"=>$this->doituong->getChitietNumberBooking(),
@@ -206,11 +207,12 @@ class admin extends controler{
 
         // hàm xóa booking 
         function deletebooking($ma){
+            $result2 = $this->doituong->update_stt_room($ma);
             $result = $this->doituong->delete_booking($ma);
             $this->view("admin_index",["page"=>"view_booking",
                 "result_b"=>$result,
                 "booking_room"=>$this->doituong->getBookRoom(),
-                "one_booking_room"=>$this->doituong->getOneBookRoom($ma),
+                //"one_booking_room"=>$this->doituong->getOneBookRoom($ma),
                 "number_lienhe"=>$this->doituong->getNumber_lienhe(),
                 "alllienhe"=>$this->doituong->getAllLienHe(),
                 "number_booking"=>$this->doituong->getNumberBookingRoom(),
@@ -231,14 +233,27 @@ class admin extends controler{
             $ma_phong = $_POST["ma_phong"];
             $ten_phong = $_POST["ten_phong"];
             $gia_phong = $_POST["gia_phong"];
-            $ma_hinh_anh = $_POST["ma_ha"];
+            $ma_hinh_anh = $_POST["ma_tt"];
             $ma_thuoc_tinh = $_POST["ma_tt"];
             $noi_dung = $_POST["noi_dung"];
+            $suc_chua_room = $_POST["suc_chua_room"];
+            $tinh_trang_room = $_POST["tinh_trang_room"];
             date_default_timezone_set('Asia/Ho_Chi_Minh');
-            $id_phong = date("dmy").date('His');
+            //$id_phong = date("dmy").date('His');
+        //echo $ma_hinh_anh;
+        $ma_room = [];
+        $ma_room = $this->doituong->getMaPhong();
+        $dem = 0;
+        $i = 0;
+        foreach($ma_room as $row){
+            if($ma_phong == $row['ma_phong'])
+                $dem = 1;
+        }
 
-        $result =  $this->doituong->add_room_model($id_phong,$ma_phong,$ten_phong,$gia_phong,$ma_hinh_anh,$ma_thuoc_tinh,$noi_dung);
-
+        if($dem == 0)
+            $result =  $this->doituong->add_room_model($ma_phong,$ten_phong,$gia_phong,$ma_hinh_anh,$ma_thuoc_tinh,$noi_dung, $suc_chua_room, $tinh_trang_room);    
+        if($dem == 1)
+            $result = 0;
         $this->view("admin_index",["page"=>"add_room",
         "result"=>$result,
         "booking_room"=>$this->doituong->getBookRoom(),
@@ -279,12 +294,13 @@ class admin extends controler{
                 $ma_phong = $_POST["ma_phong"];
                 $ten_p = $_POST["ten_phong"];
                 $gia_p = $_POST["gia_phong"];
-                $ma_ha = $_POST["ma_ha"];
+                $ma_ha = $_POST["ma_tt"];
                 $ma_tt = $_POST["ma_tt"];
                 $noi_dung = $_POST["noi_dung"];
-               
+                $suc_chua_room =  $_POST["suc_chua_r"];
+                $tinh_trang_room = $_POST["tinh_trang_r"];
 
-                $result = $this->doituong->UpdateRooms($ma_phong,$ten_p, $gia_p, $ma_tt, $ma_ha , $noi_dung);
+                $result = $this->doituong->UpdateRooms($ma_phong,$ten_p, $gia_p, $ma_tt, $ma_ha , $noi_dung, $suc_chua_room, $tinh_trang_room);
                 $this->view("admin_index",["page"=>"view_rooms",
                 "result_up_r"=>$result,
                 "allroom"=>$this->doituong->getAllRoom(),
@@ -349,6 +365,7 @@ class admin extends controler{
             }
 
             $this->view("admin_index",["page"=>"add_image",
+            //"listma_tt"=>$this->doituong->getMaThuocTinh(),
             "maHinhAnh"=>$this->doituong->getMaHinhAnh(),
             "number_booking"=>$this->doituong->getNumberBookingRoom(),
             "number_lienhe"=>$this->doituong->getNumber_lienhe(),
@@ -359,6 +376,7 @@ class admin extends controler{
             }
        }else{
         $this->view("admin_index",["page"=>"add_image",
+        "listma_tt"=>$this->doituong->getMaThuocTinh(),
         "maHinhAnh"=>$this->doituong->getMaHinhAnh(),
         "number_booking"=>$this->doituong->getNumberBookingRoom(),
         "number_lienhe"=>$this->doituong->getNumber_lienhe(),
@@ -401,7 +419,7 @@ class admin extends controler{
             $tieu_de = $_POST["ten_ThuocTinh"];
             $noidung = $_POST["noi_dung_ThuocTinh"];
             $ma_thuoc_tinh = trim($_POST["ma_ThuocTinh"]);
-            $id  = time();
+            //$id  = time();
             if($tieu_de===null || $noidung === null || $ma_thuoc_tinh ===null ){
                 $this->view("admin_index",["page"=>"add_thuoctinh",
             "maThuocTinh"=>$this->doituong->getMaThuocTinh(),
@@ -415,7 +433,7 @@ class admin extends controler{
            
             }else {
                
-            $result = $this->doituong->addThuocTinh($ma_thuoc_tinh,$tieu_de,$noidung,$id);
+            $result = $this->doituong->addThuocTinh($ma_thuoc_tinh,$tieu_de,$noidung);
                 $this->view("admin_index",["page"=>"add_thuoctinh",
             "maThuocTinh"=>$this->doituong->getMaThuocTinh(),
             "maHinhAnh"=>$this->doituong->getMaHinhAnh(),
@@ -453,8 +471,8 @@ class admin extends controler{
     }
 
     // delete thuộc tính
-    function deleteThuocTinh($id){
-        $kq = $this->doituong->delete_thuoctinh($id);
+    function deleteThuocTinh($ma){
+        $kq = $this->doituong->delete_thuoctinh($ma);
         $this->view("admin_index",["page"=>"view_thuoctinh",
         "allthuoctinh"=>$this->doituong->getAllThuocTinh(),
         "result"=>$kq,
@@ -466,12 +484,12 @@ class admin extends controler{
     }
 
     //update thuoc tinh 
-    function updatethuoctinh($id){
+    function updatethuoctinh($ma){
         if(isset($_POST["update_tt"])){
-            $ma = $_POST["ma_tt_up"];
+            //$ma = $_POST["ma_tt_up"];
             $ten = $_POST["ten_tt_up"];
             $noidung = $_POST["nd_tt_up"];
-            $result = $this->doituong->update_thuoc_tinh($id ,$ma , $ten , $noidung );
+            $result = $this->doituong->update_thuoc_tinh($ma , $ten , $noidung );
             
             $this->view("admin_index",["page"=>"view_thuoctinh",
             "allthuoctinh"=>$this->doituong->getAllThuocTinh(),
@@ -484,9 +502,10 @@ class admin extends controler{
 
         } else {
             $this->view("admin_index",["page"=>"update_thuoctinh",
-            "onethuoctinh"=>$this->doituong->getOneThuocTinh($id),
+            "onethuoctinh"=>$this->doituong->getOneThuocTinh($ma),
             "maThuocTinh"=>$this->doituong->getMaThuocTinh(),
-            "id_tt"=>$id,
+            "ma_tt"=>$ma,
+            //"id_tt"=>$id,
             "number_booking"=>$this->doituong->getNumberBookingRoom(),
             "number_lienhe"=>$this->doituong->getNumber_lienhe(),
             "alllienhe"=>$this->doituong->getAllLienHe(),

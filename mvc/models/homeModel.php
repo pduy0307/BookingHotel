@@ -2,7 +2,8 @@
 class homeModel extends connectDB{
     
     function getListRoom(){
-        $sql = 'SELECT * FROM phong ';
+        $tt = 0;
+        $sql = 'SELECT * FROM phong';
         $result = $this->connect->query($sql);
 
         // trả về mảng phòng
@@ -19,14 +20,31 @@ class homeModel extends connectDB{
 
     }
 
+    function getListRoom_emp(){
+        $sql = 'SELECT *  FROM phong WHERE tinh_trang = 0';
+        $result = $this->connect->query($sql);
+
+        // trả về mảng phòng
+        $listroom  = array();
+        if ($result->num_rows > 0) {
+            // show dữ liệu trên trang
+            while($row = $result->fetch_assoc()) {           
+                $listroom[] = $row;
+            }
+        } else {
+            echo "0 results";
+        }
+     return json_encode($listroom);
+    }
+
 
     // book room oder 
 
-    function bookroom($ma_dp, $check_in, $check_out,$loai_p,$slp,$nguoi_lon,$tre_em,
+    function bookroom($ma_dp, $check_in, $check_out,$loai_p,$nguoi_lon,$tre_em,
     $hoten,$email,$sdt,$ghichu, $tgdat , $giatien ,$thanh_toan){
          $sql = "INSERT INTO dat_phong (ma_dat_phong, thoi_gian_vao, thoi_gian_ra, ma_phong, 
-        so_luong_phong, nguoi_lon, tre_em, ho_ten, email, sdt, ghichu, thoi_gian_dat, gia_tien ,thanh_toan) 
-        VALUES ('$ma_dp','$check_in','$check_out','$loai_p','$slp','$nguoi_lon','$tre_em','$hoten','$email'
+        nguoi_lon, tre_em, ho_ten, email, sdt, ghichu, thoi_gian_dat, gia_tien ,thanh_toan) 
+        VALUES ('$ma_dp','$check_in','$check_out','$loai_p','$nguoi_lon','$tre_em','$hoten','$email'
         ,'$sdt','$ghichu','$tgdat','$giatien' ,'$thanh_toan')";
 
         $result = $this->connect->query($sql);
@@ -39,6 +57,15 @@ class homeModel extends connectDB{
 
     }
    
+    function updateSTT($ma_phong){
+        $sql = "UPDATE phong SET tinh_trang = 1 WHERE ma_phong = '$ma_phong'";
+        $result = $this->connect->query($sql);
+         if($result){
+             return true;
+         }else{
+             return false;
+         }
+    }
 
     //  bannner loading 
     function getbanner($ma){

@@ -60,7 +60,7 @@
                                                         <a href="./admin/updateRooms/'.$row_r["ma_phong"].'" class="btn btn-tbl-edit btn-xs">
                                                             <i class="fa fa-pencil"></i>
                                                         </a>
-                                                        <a href="./admin/deleteRoom/'.$row_r["id_phong"].'" class="btn btn-tbl-edit btn-xs" style="background-color:#f96332">
+                                                        <a href="./admin/deleteRoom/'.$row_r["ma_phong"].'" class="btn btn-tbl-edit btn-xs" style="background-color:#f96332">
                                                             <i class="fa fa-trash-o"></i>
                                                         </a>
                                                     </td>

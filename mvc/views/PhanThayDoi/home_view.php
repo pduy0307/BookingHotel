@@ -92,46 +92,7 @@
         </div>
         <!-- end wrap list room -->
 
-        <!-- wrap promotion -->
-        <div class="wrapPromotionList">
-            <div class="container-xl containerPromotionList">
-                <div class="contentPromotionList">
-                    <div class="showSlidePromotionList">
-                    <?php
-                            if(isset($data["khuyenmai"])){
-                                $list_km  = json_decode($data["khuyenmai"],true);
-                                if(!empty($list_km)){
-                                    foreach($list_km as $row14){
-                                     echo '<div class="itemSlidePromotionList">
-                                     <div class="wrapImgPromotionItem">
-                                         <a href="./khuyenmai/chitiet/'.$row14["ma_km"].'" class="wrapImgResize img16And9 linkItemImgPromotion" >
-                                             <img src="public/assets/images/'.$row14["image_anh"].'" 
-                                             class="imgItemPromtionList"  />
-                                         </a>
-                                     </div>
-         
-                                     <div class="wrapTexItemPromotionList">
-                                         <a href="./khuyenmai/chitiet/'.$row14["ma_km"].'" class="linkTitleItemPromotion" ><h4 class="wrapTitleType3 titleHeaddingItemPromotion">
-                                         '.$row14["tieu_de"].'</h4></a>
-         
-                                         <p class="desciptionItemPromotionList">'.$row14["noi_dung"].'</p>
-         
-                                         <a href="./khuyenmai/chitiet/'.$row14["ma_km"].'" title="Xem thêm" class="btnType1 btnWatchMorePromotion">Xem thêm</a>
-                                     </div>
-                                 </div>';
-                                    }
-                                }
-                            }
-                        ?>
-
-                        
-
-                        
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- end wrap promotion -->
+        
 
         <!-- banner contact -->
         <div class="wrapBannerContact" style="background-image: url(public/assets/images/nen3.jpg);">

@@ -40,7 +40,7 @@
                                     <div class="contentInputBookRoom">
                                         <div class="wrapIconFrmCtrBookRoom"><i class="fas fa-plus-circle"></i></div>
     
-                                        <select class="form-control selectPciker inputNumberAdult" name="nguoilon">
+                                        <select class="form-control selectPciker inputNumberAdult" name="nguoilon" id="adult" onchange="check_sc()">
                                             <option>Người lớn</option>
                                             <option>1</option>
                                             <option>2</option>
@@ -80,7 +80,7 @@
                                 <div class="col-md-6 colInputBookRoom">
                                     <div class="contentInputBookRoom">
                                         <div class="wrapIconFrmCtrBookRoom"><i class="fas fa-home"></i></div>
-                                        <?php $listroom  = json_decode($data["listroom"] ,true); 
+                                        <?php $listroom  = json_decode($data["listroom_emp"] ,true); 
                                         
                                         ?>
                                         <select class="form-control selectPciker formControlRoomSelect"  
@@ -89,19 +89,11 @@
                                             <?php foreach($listroom as $row){                                                                                                                                         
                                                ?>
                                                 <option  
-                                                value="<?php echo $row["ma_phong"]; ?>/<?php echo $row["gia_phong"]; ?>">
+                                                value="<?php echo $row["ma_phong"]; ?>/<?php echo $row["gia_phong"]; ?>
+                                                        -<?php echo $row["suc_chua"]; ?>">
                                                 <?php echo $row["ten_phong"];?></option>
                                             <?php   } ?>
                                         </select>
-                                    </div>
-                                </div>
-
-                                <div class="col-md-6 colInputBookRoom">
-                                    <div class="contentInputBookRoom">
-                                        <div class="wrapIconFrmCtrBookRoom"><i class="fas fa-sort-numeric-up-alt"></i></div>
-    
-                                        <input type="number" class="form-control" id="slp" onchange="checkGia()"
-                                        name="slp" placeholder="Số lượng phòng" />
                                     </div>
                                 </div>
 
@@ -159,12 +151,11 @@
                                         </select>
                                     </div>
                                 </div> 
-
     
-                                <div class="col-md-12 colInputBookRoom colBtnBookRoom" id="test">
+                                <div class="col-md-6 colInputBookRoom colBtnBookRoom" id="test">
                                     <div class="contentInputBookRoom">
                                         <button type="submit" name="datngay" 
-                                        class="btnType1 btnBookNowRoomForm">Đặt Phòng Ngay</button>
+                                        class="btnType1 btnBookNowRoomForm" style="width: 223.5px">Đặt Phòng Ngay</button>
                                     </div>
                                     <div class="contentInputBookRoom" id="check">
                                         
@@ -210,12 +201,12 @@
             "Vui lòng chọn loại phòng bạn cần đặt!");
             return false;
         }
-        var soluongphong = document.forms["datphong"]["slp"].value;
-        if (soluongphong== "") {
-            swal("Lỗi..........!", 
-            "Nhập số lượng phòng bạn muốn thuê");
-            return false;
-        }
+        // var soluongphong = document.forms["datphong"]["slp"].value;
+        // if (soluongphong== "") {
+        //     swal("Lỗi..........!", 
+        //     "Nhập số lượng phòng bạn muốn thuê");
+        //     return false;
+        // }
         var hoten = document.forms["datphong"]["hoten"].value;
         if (hoten== "") {
             swal("Lỗi..........!", 
@@ -239,23 +230,24 @@
 
     function checkGia(){
         var check = document.getElementById("phong").value;
-        var giaphong  = check.slice(check.indexOf("/")+1);
-        var so_luong =  document.getElementById("slp").value;
+        var person = document.getElementById("adult").value;
+        var giaphong  = check.slice(check.indexOf("/")+1, check.indexOf("-"));
+        var sc_room = check.slice(check.indexOf("-")+1);
         var check_in  = document.getElementById("checkin").value;
         var check_out  = document.getElementById("checkout").value;
-        
-        
-        if(so_luong <=  0 ){
-            swal("Lỗi Phòng không thể nhở hơn 0 ");
-        }
-        
-        if(so_luong >  0){
-           var  giatien = so_luong*giaphong; 
-           document.getElementById("giatien").value = giatien;
-        }
-        
-       
-       
+        var k = (trans_str_to_num(check_out) - trans_str_to_num(check_in))/86400000;
+        var  giatien = giaphong * k;
+        if(k == 0)
+        giatien = giaphong 
+        document.getElementById("giatien").value = giatien;
+        if(sc_room < person && person != "Người lớn")
+            swal("Lỗi.....","Số lượng người ở vượt quá sức chứa của phòng");
+    }
+
+    function trans_str_to_num(str){
+        var trans = str.split("/")
+        var mydate = new Date(trans[2], trans[1]-1, trans[0]);
+        return mydate;
     }
 
     function dat_thanh_cong(){
@@ -264,6 +256,17 @@
     }
     function dat_that_bai(){
         swal("Lỗi......","Đặt phòng không thành công. Hãy kiêm tra thông tin và thử lại .");
+    }
+
+    function check_sc(){
+        var check = document.getElementById("phong").value;
+        var person = document.getElementById("adult").value;
+        var sc_room = check.slice(check.indexOf("-")+1);
+        var giaphong  = check.slice(check.indexOf("/")+1, check.indexOf("-"));
+       // var so_luong =  document.getElementById("slp").value;
+        if(person > sc_room){
+            swal("Lỗi.....","Số lượng người ở vượt quá sức chứa của phòng");
+        } 
     }
 </script>
 

@@ -11,7 +11,7 @@
 									<header>Update Properties</header>
 									 </ul>
                                 </div>
-                                <form action="./admin/updatethuoctinh/<?php echo $data["id_tt"]?>" method="POST" > 
+                                <form action="./admin/updatethuoctinh/<?php echo $data["ma_tt"]?>" method="POST" > 
 								<div class="card-body row">
 										<div class="col-lg-6 p-t-20"> 
 										<?php $info = json_decode($data["onethuoctinh"],true);?>
@@ -19,16 +19,7 @@
 							              <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label getmdl-select getmdl-select__fix-height txt-full-width">
 									            <input class="mdl-textfield__input" type="text" id="sample2"  value="<?php echo $row["ma_thuoc_tinh"];?>"
 												tabIndex="-1" name="ma_tt_up">
-									            <label for="sample2" class="pull-right margin-0">
-									                <i class="mdl-icon-toggle__label material-icons">keyboard_arrow_down</i>
-									            </label>
 									            <label for="sample2" class="mdl-textfield__label">Mã Thuộc Tính</label>
-									            <ul data-mdl-for="sample2" class="mdl-menu mdl-menu--bottom-left mdl-js-menu">
-                                                    <?php $info = $data["maThuocTinh"];?>
-                                                    <?php foreach($info as $row1){ ?>
-									                <li class="mdl-menu__item"> <?php echo $row1["ma_thuoc_tinh"]?></li>
-                                                    <?php } ?>
-									            </ul>
 									        </div>
 							            </div>
 									<!-- -->

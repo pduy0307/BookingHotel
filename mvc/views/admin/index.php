@@ -127,7 +127,7 @@
 														<th>STT</th>
 														<th>Name</th>
 														<th>SDT</th>
-														<th>Ngày Đặt</th>
+														
 														<th>Room</th>														
 														<th>Status</th>
 														<th>Thanh Toán</th>
@@ -146,7 +146,7 @@
 																echo "<td> $number </td>";
 																echo "<td>".$row['ho_ten']." </td>";
 																echo "<td>".$row['sdt']." </td>";
-																echo "<td>".$row['thoi_gian_dat']." </td>";
+																
 																echo "<td>".$row['ma_phong']." </td>";
 																$status = $row["trang_thai"];
 																if($status =="0"){

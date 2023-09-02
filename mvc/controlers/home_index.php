@@ -12,7 +12,10 @@ class home_index extends controler{
         $this->view("home_index",["page"=>"home_view",
         "banner_image"=>$this->doituong->getbanner("banner"),
         "phong"=>$this->doituong->loadRoom(),
-        "listroom"=>$this->doituong->getListRoom()]);
+        "listroom"=>$this->doituong->getListRoom(),
+        "listroom_emp"=>$this->doituong->getListRoom_emp()
+        ]);
+        
     }
 
 
@@ -28,7 +31,7 @@ class home_index extends controler{
                 $treem  = $_POST["treem"];
             }
             $phong  = $_POST["phong"];
-            $so_luong_phong  = $_POST["slp"];
+            //$so_luong_phong  = $_POST["slp"];
             $ho_ten  = $_POST["hoten"];
             if(empty( $_POST["email"]) ||  $_POST["email"] == "Nhập email"){
                 $email= "No Email";
@@ -52,26 +55,42 @@ class home_index extends controler{
             $array_phong = str_split($phong);
             $dem  = 1;
             $dem2 = 0;
+            $dem_sc = 1;
+            $dem_sc2 = 0;
             foreach ( $array_phong as $row_dem ){
                 if($row_dem== "/"){
                     $dem2 = $dem;
                 }
+                if($row_dem=="-"){
+                    $dem_sc2 = $dem_sc;
+                }
                 $dem ++;
+                $dem_sc++;
             }
             $phong2 = substr($phong,0,$dem2-1);
+            //$suc_chua = substr($phong,$dem_sc2);
             $thanh_toan = $_POST["thanhtoan"];
-
-            
-            
-           $result = $this->doituong->bookroom($ma_dat_p, $check_in, $check_out,$phong2,$so_luong_phong,
-           $nguoi_lon,$treem,$ho_ten,$email,$sdt,$ghi_chu, $ngaydat,$giatien , $thanh_toan);
-           
+            //echo $suc_chua;
+            //$check = 1;
+            // if($suc_chua < $nguoi_lon)
+            //     $check = 0;
+            //if($check == 1){
+                $result = $this->doituong->bookroom($ma_dat_p, $check_in, $check_out,$phong2,
+                $nguoi_lon,$treem,$ho_ten,$email,$sdt,$ghi_chu, $ngaydat,$giatien , $thanh_toan);
+                $result1 = $this->doituong->updateSTT($phong2);
+            //}
+            // if($check == 0)
+            //     $result = 0;
+           //
            $this->view("home_index",["page"=>"home_view",
            "result"=>$result,
            "madapphong"=>$ma_dat_p,
            "banner_image"=>$this->doituong->getbanner("banner"),
            "phong"=>$this->doituong->loadRoom(),
-           "listroom"=>$this->doituong->getListRoom()]); 
+           "listroom"=>$this->doituong->getListRoom(),
+           "listroom_emp"=>$this->doituong->getListRoom_emp()
+            ]); 
+           
         }
     }
 }

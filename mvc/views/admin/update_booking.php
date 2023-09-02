@@ -28,7 +28,7 @@
 						            <div class="col-lg-6 p-t-20"> 
 						              <div class = "mdl-textfield mdl-js-textfield mdl-textfield--floating-label txt-full-width">
 					                     <input class = "mdl-textfield__input" type = "text" name="ngay_check_in"
-										 style="border: 1px solid #A9A9A9 ;border-radius: 5px; padding: 2px;"
+										 style="border: 1px solid #A9A9A9 ;border-radius: 5px; padding: 2px; color: black"
 										 value="<?php echo $row["thoi_gian_vao"] ?>" id = "txtLasttName">
 					                     <label class = "mdl-textfield__label" >Ngày check-in</label>
 					                  </div>
@@ -42,7 +42,7 @@
 					                      <span class = "mdl-textfield__error">Enter Valid Email Address!</span>
 					                  </div>
 						            </div>
-									<div class="col-lg-6 p-t-20"> 
+									<!-- <div class="col-lg-6 p-t-20"> 
 						              <div class = "mdl-textfield mdl-js-textfield mdl-textfield--floating-label txt-full-width">
 					                     <input class = "mdl-textfield__input" type = "number" name="slp"
 										 style="border: 1px solid #A9A9A9 ;border-radius: 5px; padding: 2px;"
@@ -50,12 +50,12 @@
 					                     <label class = "mdl-textfield__label" >Số Lượng Phòng</label>
 					                      <span class = "mdl-textfield__error">Nhập Số lượng Phòng</span>
 					                  </div>
-						            </div>
+						            </div> -->
 
 						             <div class="col-lg-6 p-t-20"> 
 						              <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label getmdl-select getmdl-select__fix-height txt-full-width">
 								            <input class="mdl-textfield__input" type="text" id="sample2" 
-											style="border: 1px solid #A9A9A9 ;border-radius: 5px; padding: 2px;"
+											style="border: 1px solid #A9A9A9 ;border-radius: 5px; padding: 2px; color: black"
 											name="ngay_check_out"
 											value="<?php echo $row["thoi_gian_ra"] ?>"  tabIndex="-1">
 								            <label for="sample2" class="pull-right margin-0">
@@ -78,8 +78,8 @@
 						            <div class="col-lg-6 p-t-20"> 
 						              <div class = "mdl-textfield mdl-js-textfield mdl-textfield--floating-label txt-full-width">
 					                     <input class = "mdl-textfield__input" type = "text" name="nguoi_lon"
-										 style="border: 1px solid #A9A9A9 ;border-radius: 5px; padding: 2px;"
-										 value="<?php echo $row["nguoi_lon"] ?>" >
+										 style="border: 1px solid #A9A9A9 ;border-radius: 5px; padding: 2px; color: black"
+										 value="<?php echo $row["nguoi_lon"] ?>">
 					                     <label class = "mdl-textfield__label" >Người lớn</label>
 					                  </div>
 						            </div>
@@ -92,17 +92,17 @@
 					                  </div>
 						            </div>
 						            <div class="col-lg-6 p-t-20"> 
-						              <div class = "mdl-textfield mdl-js-textfield mdl-textfield--floating-label txt-full-width">
-					                     <input class = "mdl-textfield__input" type = "text" name="treem"
-										 style="border: 1px solid #A9A9A9 ;border-radius: 5px; padding: 2px;"
-										  value="<?php echo $row["tre_em"] ?>" >
-					                     <label class = "mdl-textfield__label" >Trẻ em</label>
-					                  </div>
+						              	<div class = "mdl-textfield mdl-js-textfield mdl-textfield--floating-label txt-full-width">
+					                     	<input class = "mdl-textfield__input" type = "text" name="treem"
+										 	style="border: 1px solid #A9A9A9 ;border-radius: 5px; padding: 2px;"
+										  	value="<?php echo $row["tre_em"] ?>" >
+					                     	<label class = "mdl-textfield__label" >Trẻ em</label>
+					                  	</div>
 						            </div>
 						             <div class="col-lg-6 p-t-20"> 
 						              <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label getmdl-select getmdl-select__fix-height txt-full-width">
 								            <input class="mdl-textfield__input" type="text" id="list2" name="ngay_dat"
-											style="border: 1px solid #A9A9A9 ;border-radius: 5px; padding: 2px;"
+											style="border: 1px solid #A9A9A9 ;border-radius: 5px; padding: 2px; color: black"
 											 value="<?php echo $row["thoi_gian_dat"] ?>" readonly tabIndex="-1">
 								            <label for="list2" class="pull-right margin-0">
 								                
@@ -112,35 +112,25 @@
 						           	</div>
 						           	<div class="col-lg-6 p-t-20"> 
 									   <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label getmdl-select getmdl-select__fix-height txt-full-width">
-								            <input class="mdl-textfield__input" type="text" id="list3" 
-											style="border: 1px solid #A9A9A9 ;border-radius: 5px; padding: 2px;"
-											value="<?php echo $row["ma_phong"] ?>" name="loai_phong"
-											 readonly tabIndex="-1">
-								            <label for="list3" class="pull-right margin-0">
-								                <i class="mdl-icon-toggle__label material-icons">keyboard_arrow_down</i>
-								            </label>
+								           
 								            <label for="list3" class="mdl-textfield__label">Loại Phòng</label>
-								            <ul data-mdl-for="list3" class="mdl-menu mdl-menu--bottom-left mdl-js-menu">
-												<?php if(isset($data["listroom"])){
-													$list = json_decode($data["listroom"],true); $number = 1;
-													if(!empty($list)){
-														foreach($list as $row1){
-															
-															echo '<li class="mdl-menu__item" data-val='.$number.' >'. $row1["ma_phong"] .'</li>';
-															$number ++;
-														}
-													}
-												}							
-												
-												?>
-											</ul>
+											<?php $maphong_empt = json_decode($data["listroom_emp"] ,true);?>
+											<select name="loai_phong" id="list3" class="mdl-textfield__input"
+											style="border: 1px solid #A9A9A9 ;border-radius: 5px; padding: 2px; height: 33.2px" readonly tabIndex="-1" placeholder="">
+											<option value="<?php  echo $row["ma_phong"];?>" hidden><?php  echo $row["ma_phong"];?></option>
+                                                    <?php foreach($maphong_empt as $row_empt){ ?>
+														<option value="<?php echo $row_empt["ma_phong"]; ?>">
+														<?php echo $row_empt["ma_phong"];?>
+														</option>
+                                                    <?php } ?>
+											</select>
 								        </div>
 						           	</div>
 									   <div class="col-lg-6 p-t-20"> 
 						              <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label getmdl-select getmdl-select__fix-height txt-full-width">
 								            <input class="mdl-textfield__input" type="text" id="list2" name="ngay_dat"
-											style="border: 1px solid #A9A9A9 ;border-radius: 5px; padding: 2px;"
-											 value="<?php echo $row["gia_tien"] ?>" readonly tabIndex="-1">
+											style="border: 1px solid #A9A9A9 ;border-radius: 5px; padding: 2px; color: black"
+											 value="<?php echo $row["gia_tien"] ?>" readonly tabIndex="-1" disabled>
 								            <label for="list2" class="pull-right margin-0">
 								                
 								            <label for="list2" class="mdl-textfield__label">Giá Tiền</label>

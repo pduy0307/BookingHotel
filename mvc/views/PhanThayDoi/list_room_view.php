@@ -49,10 +49,25 @@
                                 <a href="phong.htm" class="wrapTitleType1 linkTitleRoomItem"
                                  title="Deluxe"><h2 class="titleRoomItem"><?php echo $row_r["ten_phong"];?></h2></a>
 
-                                <h3 class="textRoomDetail"><?php echo $row_r["noi_dung"];?>
-                                </h3>
-
-                                
+                                <h3 class="textRoomDetail"><?php echo $row_r["noi_dung"];?></h3>
+                                <h3 class="textRoomDetail">Phòng <?php echo $row_r["suc_chua"];?> người</h3> 
+                                <h3 class="textRoomDetail" id="stt_room" value="<?php echo $row_r["tinh_trang"];?>">
+                                    <?php  
+                                        if($row_r["tinh_trang"] == 1){
+                                            echo "Tình trạng phòng: Full";
+                                    ?>
+                                            <script type='text/javascript'>
+                                                document.getElementById("btn_BK").style.display = "none";
+                                            </script>
+                                    <?php
+                                        }
+                                    ?>
+                                    <?php 
+                                        
+                                        if($row_r["tinh_trang"] == 0)
+                                            echo "Tình trạng phòng: Empty";
+                                    ?>
+                                </h3> 
                             </div>
 
                             <div class="media-right mediaRightRoomItem">
@@ -62,7 +77,7 @@
                                     <?php echo substr($row_r["gia_phong"],0,3).",".substr($row_r["gia_phong"],3,3);?> VNĐ</div>
                                 </div>
 
-                                <button type="button" class="btnType1 btnBookRoomDetail" name="Book-now" data-room="1" data-toggle="modal" data-target="#modalFormBookRoom">Book now</button>
+                                <!-- <button type="button" class="btnType1 btnBookRoomDetail" id="btn_BK" name="Book-now" data-room="1" data-toggle="modal" data-target="#modalFormBookRoom">Book now</button> -->
 
                                 <a href="./room/chitiet/<?php echo $row_r["ma_phong"];?>" class="btnType2 btnViewRoomDetail" title="Chi tiết">Chi tiết</a>
                             </div>

@@ -55,14 +55,14 @@
 												<td class="center"><?php echo $row["ten_thuoc_tinh"] ;  ?></td>
 												<td class="center"><?php echo $row["noi_dung"] ;  ?></td>											
 												<td class="center">
-													<a href="./admin/updatethuoctinh/<?php echo $row["id_thuoc_tinh"] ;?>"
+													<a href="./admin/updatethuoctinh/<?php echo $row["ma_thuoc_tinh"] ;?>"
                                                     style="border-radius: 20px;"
                                                     class="btn btn-tbl-edit btn-xs">
                                                     <i class="fa fa-pencil"></i>
 													</a>
 													<a class="btn btn-tbl-delete btn-xs"
                                                     style="border-radius: 20px;"
-                                                    href="./admin/deleteThuocTinh/<?php echo $row["id_thuoc_tinh"] ;?>">
+                                                    href="./admin/deleteThuocTinh/<?php echo $row["ma_thuoc_tinh"] ;?>">
 													<i class="fa fa-trash-o "></i>
 													</a>
 												</td>

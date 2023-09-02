@@ -79,6 +79,11 @@
                                                     <div class="col-md-6 colItemLinkMenuFooter">
                                                         <a href="./lienhe" title="Liên hệ">Liên hệ</a>
                                                     </div>
+
+                                                    
+                                                    <div class="col-md-6 colItemLinkMenuFooter">
+                                                        <a href="./admin/PhanCoDinh/login" title="Admin page" target="_blank">Admin Page</a>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>

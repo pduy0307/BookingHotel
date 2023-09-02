@@ -14,13 +14,15 @@ class hinhanh extends controler{
 
         $this->view("home_index",["page"=>"list_image",
         "hinhanh"=>$this->doituong->getAllImage(),
-        "listroom"=>$this->home1->getListRoom()]);
+        "listroom"=>$this->home1->getListRoom(),
+        "listroom_emp"=>$this->doituong->getListRoom_emp()]);
     }
     function chitiet($ma){
         $this->view("home_index",["page"=>"chi_tiet_image",
         "OneImage"=>$this->doituong->getOneIamge($ma),
         "hinhanh"=>$this->doituong->getAllImage(),
-        "listroom"=>$this->home1->getListRoom()]);
+        "listroom"=>$this->home1->getListRoom(),
+        "listroom_emp"=>$this->doituong->getListRoom_emp()]);
     }
 }
 ?>

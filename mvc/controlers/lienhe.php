@@ -12,7 +12,9 @@ class lienhe extends controler{
 
     // ham Start
     public function home(){
-        $this->view("home_index",["page"=>"lien_he_view","listroom"=>$this->home1->getListRoom()]);
+        $this->view("home_index",["page"=>"lien_he_view",
+        "listroom"=>$this->home1->getListRoom(),
+        "listroom_emp"=>$this->doituong->getListRoom_emp()]);
     }
 
     // thêm lời nhắn từ khách hàng 
@@ -31,7 +33,8 @@ class lienhe extends controler{
                 echo $ketqua;
                 $this->view("home_index",["page"=>"lien_he_view",
                 "listroom"=>$this->home1->getListRoom(),
-                "ketqua"=>$ketqua]);
+                "ketqua"=>$ketqua,
+                "listroom_emp"=>$this->doituong->getListRoom_emp()]);
         }
     }
 }

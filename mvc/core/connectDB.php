@@ -3,7 +3,7 @@ class connectDB{
 
     public  $connect;
     protected $servername = "localhost";
-    protected $dbname = "btl";
+    protected $dbname = "2dty";
     protected  $username = "root";
     protected $password = "";
 

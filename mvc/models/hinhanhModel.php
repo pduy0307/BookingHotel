@@ -33,6 +33,23 @@ class hinhanhModel extends connectDB{
                }
                return json_encode($one_hinhanh);
      }
+
+     function getListRoom_emp(){
+        $sql = 'SELECT *  FROM phong WHERE tinh_trang = 0';
+        $result = $this->connect->query($sql);
+
+        // trả về mảng phòng
+        $listroom  = array();
+        if ($result->num_rows > 0) {
+            // show dữ liệu trên trang
+            while($row = $result->fetch_assoc()) {           
+                $listroom[] = $row;
+            }
+        } else {
+            echo "0 results";
+        }
+     return json_encode($listroom);
+    }
 }
 
 ?>

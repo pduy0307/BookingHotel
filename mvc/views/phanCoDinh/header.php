@@ -34,7 +34,7 @@
 
                                     <div class="wrapListMenuSubHeaderBottom">
                                         <ul class="listMenuSubHeaderBottom">
-                                            <?php $listroom =json_decode( $data["listroom"],true) ?>
+                                            <?php $listroom =json_decode( $data["listroom_emp"],true) ?>
                                             <?php foreach($listroom as $row) { ?>
                                             <li class="listItemMenuSubHeaderBottom">
                                             <a class="listLinkMenuSubHeaderBottom"

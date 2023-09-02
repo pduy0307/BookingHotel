@@ -18,10 +18,25 @@ class roomModel extends connectDB{
      return json_encode($listroom);
 
     }
+    function getListRoom_emp(){
+        $sql = "SELECT *  FROM phong WHERE tinh_trang = '0'";
+        $result = $this->connect->query($sql);
 
+        // trả về mảng phòng
+        $listroom  = array();
+        if ($result->num_rows > 0) {
+            // show dữ liệu trên trang
+            while($row = $result->fetch_assoc()) {           
+                $listroom[] = $row;
+            }
+        } else {
+            echo "0 results";
+        }
+     return json_encode($listroom);
+    }
     // get danh sach cac phong 
     function getAllRoom(){
-        $sql = "SELECT DISTINCT phong.ma_phong, phong.ten_phong, phong.noi_dung , phong.gia_phong, hinh_anh.image_anh
+        $sql = "SELECT DISTINCT phong.ma_phong, phong.ten_phong, phong.noi_dung , phong.gia_phong, hinh_anh.image_anh, phong.suc_chua, phong.tinh_trang
         FROM phong INNER JOIN hinh_anh  WHERE phong.ma_hinh_anh = hinh_anh.ma_hinh_anh GROUP BY phong.ma_phong";
         $result = $this->connect->query($sql);
         $info  = array();

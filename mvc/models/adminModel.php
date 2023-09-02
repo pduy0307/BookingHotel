@@ -164,7 +164,17 @@ class adminModel extends connectDB{
 
         // xóa booking room 
         function delete_booking($ma){
-            $sql = "DELETE FROM dat_phong WHERE ma_dat_phong='$ma'";
+            $sql = "DELETE FROM dat_phong WHERE ma_phong='$ma'";
+            $result = $this->connect->query($sql);
+            if($result){
+                return true;
+            } else{
+                return false;
+            }
+        }
+        // cập lại lại trạng thái phòng sau khi xóa booking
+        function update_stt_room($ma){
+            $sql = "UPDATE phong SET tinh_trang = 0 WHERE ma_phong = '$ma'";
             $result = $this->connect->query($sql);
             if($result){
                 return true;
@@ -174,10 +184,10 @@ class adminModel extends connectDB{
         }
 
         // cập nhật thông tin booking 
-        function updateBooking($ma_dp,$ngay_check_in, $so_lp,
-        $ngay_check_out ,$sdt, $nguoi_lon,$hoten, $treem , $ngay_dat,$loai_phong  , $ghichu, $email ){
+        function updateBooking($ma_dp,$ngay_check_in, $ngay_check_out 
+        ,$sdt, $nguoi_lon,$hoten, $treem , $ngay_dat,$loai_phong  , $ghichu, $email ){
             $sql ="UPDATE `dat_phong` SET thoi_gian_vao='$ngay_check_in',
-            thoi_gian_ra='$ngay_check_out',ma_phong='$loai_phong',so_luong_phong='$so_lp',nguoi_lon='$nguoi_lon',
+            thoi_gian_ra='$ngay_check_out',ma_phong='$loai_phong',nguoi_lon='$nguoi_lon',
             tre_em='$treem',ho_ten='$hoten',email='$email',sdt='$sdt',ghichu='$ghichu',
             thoi_gian_dat='$ngay_dat' WHERE ma_dat_phong='$ma_dp'";
             $result = $this->connect->query($sql);
@@ -236,7 +246,6 @@ class adminModel extends connectDB{
         
         return $ma_hinh_anh;
     }
-
     // lấy danh sách hình ảnh hiện có trong sql 
     function getAllImage(){
         $sql = "SELECT * FROM hinh_anh ";
@@ -268,13 +277,13 @@ class adminModel extends connectDB{
 
     ///********************************************** Phần dành cho thuộc tính *********************** */
     // hàm thêm thuộc tính
-    function addThuocTinh($ma_thuoc_tinh,$tieu_de,$noidung,$id){
+    function addThuocTinh($ma_thuoc_tinh,$tieu_de,$noidung){
         if(isset($ma_thuoc_tinh)){
             if($ma_thuoc_tinh == null || $ma_thuoc_tinh ==""){
                 return false;
             }else{
-                $sql  ="INSERT INTO thuoc_tinh(ma_thuoc_tinh, ten_thuoc_tinh, noi_dung,id_thuoc_tinh) 
-                VALUES ('$ma_thuoc_tinh','$tieu_de','$noidung','$id')";
+                $sql  ="INSERT INTO thuoc_tinh(ma_thuoc_tinh, ten_thuoc_tinh, noi_dung) 
+                VALUES ('$ma_thuoc_tinh','$tieu_de','$noidung')";
                 $result = $this->connect->query($sql);
 
                 if($result){
@@ -319,9 +328,26 @@ class adminModel extends connectDB{
         return $ma_thuoc_tinh;
     }
 
+    //hàm get Mã Phòng
+    function getMaPhong(){
+        $sql = "SELECT DISTINCT ma_phong FROM phong ";
+        $result = $this->connect->query($sql);
+        $ma_phong = array();
+        if ($result->num_rows > 0) {
+            // show dữ liệu trên trang
+            while($row = $result->fetch_assoc()) {           
+                $ma_phong[] = $row;
+            }
+        } else {
+            return false;
+        }
+        
+        return $ma_phong;
+    }
+
     // xóa thuộc tính 
-    function delete_thuoctinh($id){
-        $sql  = "DELETE FROM thuoc_tinh WHERE id_thuoc_tinh='$id'";
+    function delete_thuoctinh($ma){
+        $sql  = "DELETE FROM thuoc_tinh WHERE ma_thuoc_tinh='$ma'";
         $result = $this->connect->query($sql);
 
         if($result){
@@ -332,10 +358,10 @@ class adminModel extends connectDB{
     }
 
     // hàm update thuộc tính 
-    function update_thuoc_tinh($id ,$ma , $ten, $noidung ){
+    function update_thuoc_tinh($ma , $ten, $noidung ){
 
-        $sql = " UPDATE thuoc_tinh SET ma_thuoc_tinh ='$ma', ten_thuoc_tinh = '$ten' , noi_dung = '$noidung' 
-        WHERE id_thuoc_tinh = '$id'";
+        $sql = " UPDATE thuoc_tinh SET ten_thuoc_tinh = '$ten' , noi_dung = '$noidung' 
+        WHERE ma_thuoc_tinh = '$ma'";
 
         $result = $this->connect->query($sql);
         if($result){
@@ -346,8 +372,8 @@ class adminModel extends connectDB{
     }
 
     // lấy dữ liệu 1 thuộc tính khi cần update 
-    function getOneThuocTinh($id){
-        $sql  = "SELECT * FROM thuoc_tinh WHERE id_thuoc_tinh = '$id'";
+    function getOneThuocTinh($ma){
+        $sql  = "SELECT * FROM thuoc_tinh WHERE ma_thuoc_tinh = '$ma'";
 
         $result  = $this->connect->query($sql);
         $info = array();
@@ -365,9 +391,9 @@ class adminModel extends connectDB{
 
 
     ///************************************************* Phần Dành Cho Room (Phòng)*********** */
-    function add_room_model($id_phong,$ma_phong,$ten_phong,$gia_phong,$ma_hinh_anh,$ma_thuoc_tinh,$noi_dung){
-        $sql = "INSERT INTO phong(id_phong,ma_phong, ten_phong, noi_dung, gia_phong, ma_hinh_anh, ma_thuoc_tinh) 
-        VALUES ('$id_phong','$ma_phong', '$ten_phong', '$noi_dung', '$gia_phong', '$ma_hinh_anh','$ma_thuoc_tinh')";
+    function add_room_model($ma_phong,$ten_phong,$gia_phong,$ma_hinh_anh,$ma_thuoc_tinh,$noi_dung,$suc_chua_room,$tinh_trang_room){
+        $sql = "INSERT INTO phong(ma_phong, ten_phong, noi_dung, gia_phong, ma_hinh_anh, ma_thuoc_tinh, suc_chua, tinh_trang) 
+        VALUES ('$ma_phong', '$ten_phong', '$noi_dung', '$gia_phong', '$ma_hinh_anh','$ma_thuoc_tinh','$suc_chua_room','$tinh_trang_room')";
 
         $result = $this->connect->query($sql);
         if($result){
@@ -412,9 +438,10 @@ class adminModel extends connectDB{
 
         }
     // Update rooom do nguoi  quản trị cập nhật
-        function UpdateRooms($ma_phong,$ten_p, $gia_p, $ma_tt, $ma_ha , $noi_dung){
+        function UpdateRooms($ma_phong,$ten_p, $gia_p, $ma_tt, $ma_ha , $noi_dung, $suc_chua_room, $tinh_trang_room){
             $sql  = "UPDATE phong SET ten_phong='$ten_p',noi_dung='$noi_dung',
-            gia_phong=$gia_p,ma_hinh_anh='$ma_ha',ma_thuoc_tinh='$ma_tt' WHERE ma_phong='$ma_phong'";
+            gia_phong=$gia_p,ma_hinh_anh='$ma_ha',ma_thuoc_tinh='$ma_tt',suc_chua='$suc_chua_room',tinh_trang='$tinh_trang_room' 
+            WHERE ma_phong='$ma_phong'";
             $result = $this->connect->query($sql);
             if($result){
                 return true;
@@ -425,7 +452,7 @@ class adminModel extends connectDB{
 
     // hàm xóa phòng
         function delete_room($ma){
-            $sql  = "DELETE FROM phong WHERE id_phong='$ma'";
+            $sql  = "DELETE FROM phong WHERE ma_phong='$ma'";
             $result = $this->connect->query($sql);
             if($result){
                 return true;

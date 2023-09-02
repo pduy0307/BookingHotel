@@ -83,7 +83,19 @@
                                 <div class="wrapTitleAndPriceRoomDetail">
                                     <button type="button" class="btnType1 btnBookRoomDetail" 
                                     name="Book-now" data-room="3" data-toggle="modal" 
-                                    data-target="#modalFormBookRoom">Book now</button>
+                                   
+                                    <?php
+                                    if($row1["tinh_trang"] == 0){
+                                    ?>
+                                         data-target="#modalFormBookRoom"
+                                    <?php
+                                    }else{
+                                    ?>
+                                        onclick="full_room()";
+                                    <?php
+                                    }
+                                    ?>
+                                    >Book now</button>
 
                                     <div class="wrapTitleType1 titleMainRoomDetail"><?php echo $row1["ten_phong"] ?></div>
                                     
@@ -209,4 +221,9 @@
             </div>
         </div>
         <!-- end room detail -->
+        <script>
+            function full_room(){
+                swal("Thông báo!", "Phòng này hiện đang có ngưởi đặt")
+            }
+        </script>
         <script src="public/assets/js/room-detail.js"></script>
